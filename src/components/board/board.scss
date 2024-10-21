@@ -1,0 +1,13 @@
+#board {
+    height: 440px;
+    width: 90vw;
+    /* background-color:#CCC; */
+    overflow-y: auto;
+    float: left;
+    position: relative;
+    margin: 50px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
