@@ -1,5 +1,11 @@
 .task {
+    cursor: pointer;
     height: 200px;
-    border: 1px solid grey !important;
+    border: 1px solid rgb(210, 210, 210) !important;
     margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    h4 {
+        margin: 0;
+    }
 }

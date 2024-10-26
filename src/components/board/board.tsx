@@ -1,3 +1,4 @@
+import { DndContext } from "@dnd-kit/core";
 import { StagesConfig } from "../../config/stages.config";
 import { StageModel } from "../../models/stage.model";
 import { StageComponent } from "../stage/stage";
@@ -7,9 +8,11 @@ export const BoardComponent = () => {
     const stages = StagesConfig;
     return (
         <div id="board">
-            {stages.map((stage: StageModel, index: number) => (
-                <StageComponent key={index} stage={stage}></StageComponent>
-            ))}
+            <DndContext>
+                {stages.map((stage: StageModel, index: number) => (
+                    <StageComponent key={index} stage={stage}></StageComponent>
+                ))}
+            </DndContext>
         </div>
     );
 };
