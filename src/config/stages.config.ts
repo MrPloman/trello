@@ -1,10 +1,19 @@
 import { StageModel } from "../models/stage.model";
+import { TaskModel } from "../models/task.model";
 
 export const StagesConfig: StageModel[] = [
     {
         name: "Defining",
         position: 0,
-        cards: [{ name: "Rapido" }, { name: "Lento" }, { name: "Medio" }],
+        cards: [
+            new TaskModel({
+                _id: new Date().getMilliseconds(),
+                name: "Create new Component of Drag and Drop",
+                description: "",
+                priority: "high",
+                tags: ["React", "Frontend"],
+            }),
+        ],
     },
     {
         name: "ToDo",
@@ -34,17 +43,7 @@ export const StagesConfig: StageModel[] = [
     {
         name: "Uploaded",
         position: 6,
-        cards: [
-            { name: "Rapido" },
-            { name: "Lento" },
-            { name: "Medio" },
-            { name: "Rapido" },
-            { name: "Lento" },
-            { name: "Medio" },
-            { name: "Rapido" },
-            { name: "Lento" },
-            { name: "Medio" },
-        ],
+        cards: [],
     },
     {
         name: "Delivered",
