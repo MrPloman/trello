@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { StagesConfig } from "../../config/stages.config";
 import { StageModel } from "../../models/stage.model";
 import { StageComponent } from "../stage/stage";
 import "./board.scss";
+import { useAppSelector } from "../../hooks/useTasksDispatch";
 
 export const BoardComponent = () => {
-    const stages = StagesConfig;
+    const stages = useAppSelector((state) => state.tasksState);
     const [activeCard, setActiveCard] = useState<number | null>(null);
 
     return (
