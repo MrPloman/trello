@@ -16,7 +16,13 @@ export const createTask = createAction(
 
 export const updateTask = createAction(
     UPDATE_TASK,
-    withPayloadType<{ createdTask: TaskModel; currentStage: StageModel }>()
+    withPayloadType<{
+        updatedTask: TaskModel;
+        origin: StageModel;
+        destination: StageModel;
+        lastPosition: number;
+        newPosition: number;
+    }>()
 );
 export const removeTask = createAction(
     REMOVE_TASK,

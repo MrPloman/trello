@@ -3,7 +3,7 @@ import { TaskModel } from "../models/task.model";
 
 export const StagesConfig: StageModel[] = [
     {
-        name: "Defining",
+        name: "defining",
         position: 0,
         cards: [
             new TaskModel({
@@ -30,7 +30,7 @@ export const StagesConfig: StageModel[] = [
         ],
     },
     {
-        name: "ToDo",
+        name: "todo",
         position: 1,
         cards: [
             new TaskModel({
@@ -57,32 +57,32 @@ export const StagesConfig: StageModel[] = [
         ],
     },
     {
-        name: "Doing",
+        name: "doing",
         position: 2,
         cards: [],
     },
     {
-        name: "Test",
+        name: "test",
         position: 3,
         cards: [],
     },
     {
-        name: "QA",
+        name: "qa",
         position: 4,
         cards: [],
     },
     {
-        name: "Done",
+        name: "done",
         position: 5,
         cards: [],
     },
     {
-        name: "Uploaded",
+        name: "uploaded",
         position: 6,
         cards: [],
     },
     {
-        name: "Delivered",
+        name: "delivered",
         position: 6,
         cards: [],
     },

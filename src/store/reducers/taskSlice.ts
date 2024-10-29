@@ -4,28 +4,46 @@ import { TaskModel } from "../../models/task.model";
 import { initialTaskState } from "../state/taskState";
 
 const tasksSlice = createSlice({
-    name: "board",
+    name: "tasks",
     initialState: initialTaskState,
     reducers: {
         createTask: (
             state,
             action: PayloadAction<{ createdTask: TaskModel; currentStage: StageModel }>
         ) => {
-            const { _id, name } = action.payload.createdTask;
+            const newTask = action.payload.createdTask;
+            const { name } = action.payload.currentStage;
+            state.forEach((stage) => {
+                if (stage.name === name) {
+                    stage.cards = [...stage.cards, newTask];
+                }
+            });
+        },
+        updateTask: (
+            state,
+            action: PayloadAction<{
+                updatedTask: TaskModel;
+                origin: StageModel;
+                destination: StageModel;
+                lastPosition: number;
+                newPosition: number;
+            }>
+        ) => {
+            const task = action.payload.updatedTask;
+            const newPosition = action.payload.newPosition;
+            const lastPosition = action.payload.newPosition;
+            const destinationName = action.payload.destination.name;
+            const originName = action.payload.origin.name;
+            state.forEach((stage) => {
+                if (stage.name === destinationName) {
+                    stage.cards.splice(newPosition, 0, task);
+                }
+                if (stage.name === originName) {
+                    stage.cards.splice(lastPosition, 1);
+                }
+            });
         },
     },
 });
-
-// const tasksSlice = createReducer(initialState, (builder) => {
-//     builder.addCase(
-//         actions.taskActions.createTask,
-//         (
-//             state: Store<StageModel[]>,
-//             action: PayloadAction<{ createdTask: TaskModel; currentStage: StageModel }>
-//         ) => {
-//             return state;
-//         }
-//     );
-// });
 
 export default tasksSlice.reducer;
