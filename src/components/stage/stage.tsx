@@ -9,15 +9,16 @@ export const StageComponent = (_props: { stage: StageModel; setActiveCard: any }
     return (
         <div className="stage" id={_props.stage.name.toLowerCase()}>
             <h2>{_props.stage.name}</h2>
+            <DropSpace key={`dropSpace_top_${_props.stage.name.toLowerCase()}`}></DropSpace>
 
             {_props.stage.cards.map((card) => (
                 <Fragment key={`fragment_${card._id}`}>
-                    <DropSpace key={`dropSpace_${card._id}`}></DropSpace>
                     <TaskComponent
                         key={card._id}
                         setActiveCard={_props.setActiveCard}
                         task={card}
                     ></TaskComponent>
+                    <DropSpace key={`dropSpace_${card._id}`}></DropSpace>
                 </Fragment>
             ))}
         </div>
