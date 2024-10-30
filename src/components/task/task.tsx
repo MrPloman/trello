@@ -2,17 +2,31 @@
 import { TaskModel } from "../../models/task.model";
 import "./task.scss";
 
-export const TaskComponent = (_props: { task: TaskModel; setActiveCard: any }) => {
+export const TaskComponent = (_props: {
+    task: TaskModel;
+    setDragState: any;
+    dragState: {
+        draggedStage: null | number;
+        draggedPosition: null | number;
+        draggedCard: null | TaskModel;
+    };
+}) => {
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
+    };
+    const setNewPositionCard = (task: null | TaskModel) => {
+        _props.setDragState({
+            draggedCard: task,
+            draggedPosition: _props.dragState.draggedPosition,
+            draggedStage: _props.dragState.draggedStage,
+        });
     };
     return (
         <article
             id={`task_${_props.task._id}`}
             className="task"
             draggable
-            onDragStart={() => _props.setActiveCard(_props.task._id)}
-            onDragEnd={() => _props.setActiveCard(null)}
+            onDragEnd={() => setNewPositionCard(_props.task)}
         >
             <header>
                 <span id="priority" className={`priority-${_props.task.priority}`}>
