@@ -29,6 +29,7 @@ const tasksSlice = createSlice({
                 newPosition: number;
             }>
         ) => {
+            console.log(action.payload);
             const task = action.payload.updatedTask;
             const newPosition = action.payload.newPosition;
             const lastPosition = action.payload.newPosition;

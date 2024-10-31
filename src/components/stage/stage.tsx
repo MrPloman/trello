@@ -5,40 +5,99 @@ import { TaskComponent } from "../task/task";
 import "./stage.scss";
 import { DropSpace } from "../dropSpace/dropSpace";
 import { TaskModel } from "../../models/task.model";
+import { useAppDispatch } from "../../hooks/useTasksDispatch";
+import { updateTask } from "../../store/actions/taskActions";
 
 export const StageComponent = (_props: {
     stage: StageModel;
-    setActiveCard: any;
+
     setDragState: any;
     dragState: {
-        draggedStage: null | number;
+        draggedStage: null | StageModel;
         draggedPosition: null | number;
         draggedCard: null | TaskModel;
+        originPosition: null | number;
+        originStage: null | StageModel;
     };
 }) => {
+    const dispatch = useAppDispatch();
+
     const setDraggedCardStagePosition = (stage: StageModel | null) => {
         if (stage) {
             _props.setDragState({
                 draggedCard: _props.dragState.draggedCard,
                 draggedPosition: _props.dragState.draggedPosition,
-                draggedStage: stage.position,
+                draggedStage: stage,
+                originPosition: _props.dragState.originPosition,
+                originStage: _props.dragState.originStage,
             });
+            if (
+                _props.dragState.draggedCard !== null &&
+                _props.dragState.originPosition !== null &&
+                _props.dragState.originStage !== null &&
+                _props.dragState.draggedPosition !== null
+            ) {
+                console.log({
+                    updatedTask: _props.dragState.draggedCard,
+                    destination: stage,
+                    lastPosition: _props.dragState.originPosition,
+                    origin: _props.dragState.originStage,
+                    newPosition: _props.dragState.draggedPosition,
+                });
+                dispatch(
+                    updateTask({
+                        updatedTask: _props.dragState.draggedCard,
+                        destination: stage,
+                        lastPosition: _props.dragState.originPosition,
+                        origin: _props.dragState.originStage,
+                        newPosition: _props.dragState.draggedPosition,
+                    })
+                );
+            }
+            // dispatch(
+            //     updateTask({
+            //         updatedTask: _props.dragState.draggedCard,
+            //         destination: stage,
+            //         lastPosition: _props.dragState.originPosition,
+            //         origin: _props.dragState.originStage,
+            //         newPosition: _props.dragState.draggedPosition,
+            //     })
+            // );
         }
-        // } else {
-        //     _props.setDragState({
-        //         draggedCard: _props.dragState.draggedCard,
-        //         draggedPosition: _props.dragState.draggedPosition,
-        //         draggedStage: null,
-        //     });
-        // }
+    };
+    const dispatchNewFinalPosition = (stage: StageModel) => {
+        if (
+            _props.dragState.draggedCard !== null &&
+            _props.dragState.originPosition !== null &&
+            _props.dragState.originStage !== null &&
+            _props.dragState.draggedPosition !== null
+        ) {
+            console.log({
+                updatedTask: _props.dragState.draggedCard,
+                destination: stage,
+                lastPosition: _props.dragState.originPosition,
+                origin: _props.dragState.originStage,
+                newPosition: _props.dragState.draggedPosition,
+            });
+            dispatch(
+                updateTask({
+                    updatedTask: _props.dragState.draggedCard,
+                    destination: stage,
+                    lastPosition: _props.dragState.originPosition,
+                    origin: _props.dragState.originStage,
+                    newPosition: _props.dragState.draggedPosition,
+                })
+            );
+        }
     };
     return (
         <div
             className="stage"
             id={_props.stage.name.toLowerCase()}
-            onDragEnter={() => {
+            onDragOver={() => {
                 setDraggedCardStagePosition(_props.stage);
             }}
+            onDragEnd={() => dispatchNewFinalPosition(_props.stage)}
         >
             <h2>{_props.stage.name}</h2>
             <DropSpace
@@ -53,6 +112,8 @@ export const StageComponent = (_props: {
                     <TaskComponent
                         key={card._id}
                         task={card}
+                        currentStage={_props.stage}
+                        currentPosition={index}
                         setDragState={_props.setDragState}
                         dragState={_props.dragState}
                     ></TaskComponent>

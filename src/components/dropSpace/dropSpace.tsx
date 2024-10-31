@@ -2,14 +2,17 @@
 import { useState } from "react";
 import "./dropSpace.scss";
 import { TaskModel } from "../../models/task.model";
+import { StageModel } from "../../models/stage.model";
 
 export const DropSpace = (_props: {
     position: number;
     setDragState: any;
     dragState: {
-        draggedStage: null | number;
-        draggedPosition: null | number;
         draggedCard: null | TaskModel;
+        draggedStage: null | StageModel;
+        draggedPosition: null | number;
+        originPosition: null | number;
+        originStage: null | StageModel;
     };
 }) => {
     const [showDropSpace, setShowDropSpace] = useState<boolean>(false);
@@ -20,6 +23,8 @@ export const DropSpace = (_props: {
                 draggedCard: _props.dragState.draggedCard,
                 draggedStage: _props.dragState.draggedStage,
                 draggedPosition: _props.position,
+                originPosition: _props.dragState.originPosition,
+                originStage: _props.dragState.originStage,
             });
         } else {
             setShowDropSpace(false);

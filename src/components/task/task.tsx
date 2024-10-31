@@ -1,24 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
 import "./task.scss";
 
 export const TaskComponent = (_props: {
     task: TaskModel;
+    currentPosition: number;
+    currentStage: StageModel;
     setDragState: any;
     dragState: {
-        draggedStage: null | number;
+        draggedStage: null | StageModel;
         draggedPosition: null | number;
         draggedCard: null | TaskModel;
+        originPosition: null | number;
+        originStage: null | StageModel;
     };
 }) => {
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
     };
-    const setNewPositionCard = (task: null | TaskModel) => {
+    const setNewPositionCard = () => {
         _props.setDragState({
-            draggedCard: task,
+            draggedCard: _props.task,
             draggedPosition: _props.dragState.draggedPosition,
             draggedStage: _props.dragState.draggedStage,
+            originPosition: _props.currentPosition,
+            originStage: _props.currentStage,
         });
     };
     return (
@@ -26,7 +33,7 @@ export const TaskComponent = (_props: {
             id={`task_${_props.task._id}`}
             className="task"
             draggable
-            onDragEnd={() => setNewPositionCard(_props.task)}
+            onDragStart={() => setNewPositionCard()}
         >
             <header>
                 <span id="priority" className={`priority-${_props.task.priority}`}>

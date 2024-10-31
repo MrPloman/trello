@@ -9,22 +9,20 @@ export class TaskModel {
     public checkList?: string[];
     public attachedFiles?: string[];
     constructor(
-        protected structure: {
-            _id: number;
-            name: string;
-            description: string;
-            priority: Priority;
-            tags: string[];
-            checklist?: string[];
-            attachedFiles?: string[];
-        }
+        _id: number,
+        name: string,
+        description: string,
+        tags: string[],
+        priority: Priority,
+        checklist?: string[],
+        attachedFiles?: string[]
     ) {
-        this._id = structure._id;
-        this.name = structure.name;
-        this.description = structure.description;
-        this.priority = this.structure.priority;
-        this.tags = structure.tags;
-        this.checkList = structure.checklist;
-        this.attachedFiles = structure.attachedFiles;
+        this._id = _id;
+        this.name = name;
+        this.description = description;
+        this.priority = priority;
+        this.tags = tags;
+        this.checkList = checklist;
+        this.attachedFiles = attachedFiles;
     }
 }
