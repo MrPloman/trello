@@ -11,11 +11,11 @@ function withPayloadType<T>() {
 export const updateDrag = createAction(
     UPDATE_DRAG,
     withPayloadType<{
-        draggedCard: TaskModel;
-        oldStage: StageModel;
-        newStage: StageModel;
-        oldPosition: number;
-        newPosition: number;
+        draggedCard?: TaskModel;
+        oldStage?: StageModel;
+        newStage?: StageModel;
+        oldPosition?: number;
+        newPosition?: number;
     }>()
 );
 export const removeDrag = createAction(REMOVE_DRAG);

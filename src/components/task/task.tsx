@@ -1,32 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useAppDispatch } from "../../hooks/useTasksDispatch";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
+import { updateTask } from "../../store/actions/taskActions";
 import "./task.scss";
 
 export const TaskComponent = (_props: {
     task: TaskModel;
     currentPosition: number;
     currentStage: StageModel;
-    setDragState: any;
-    dragState: {
-        draggedStage: null | StageModel;
-        draggedPosition: null | number;
-        draggedCard: null | TaskModel;
-        originPosition: null | number;
-        originStage: null | StageModel;
-    };
 }) => {
+    const dispatch = useAppDispatch();
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
     };
     const setNewPositionCard = () => {
-        _props.setDragState({
-            draggedCard: _props.task,
-            draggedPosition: _props.dragState.draggedPosition,
-            draggedStage: _props.dragState.draggedStage,
-            originPosition: _props.currentPosition,
-            originStage: _props.currentStage,
-        });
+        dispatch(
+            updateTask({
+                updatedTask: _props.task,
+                newPosition: _props.currentPosition,
+                origin: _props.currentStage,
+                destination: _props.currentStage,
+                lastPosition: _props.currentPosition,
+            })
+        );
+        // _props.setDragState({
+        //     draggedCard: _props.task,
+        //     draggedPosition: _props.dragState.draggedPosition,
+        //     draggedStage: _props.dragState.draggedStage,
+        //     originPosition: _props.currentPosition,
+        //     originStage: _props.currentStage,
+        // });
     };
     return (
         <article
