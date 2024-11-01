@@ -14,9 +14,11 @@ export const StageComponent = (_props: { stage: StageModel }) => {
     //         dispatch(updateDrag({ newStage: stage }));
     //     }
     // };
-    const dispatchNewFinalPosition = (stage: StageModel) => {
+    const dispatchNewFinalPosition = (stage: StageModel | null) => {
         if (stage) {
             dispatch(updateDrag({ newStage: stage }));
+        } else {
+            dispatch(updateDrag({ newStage: undefined }));
         }
 
         // if (
@@ -48,6 +50,7 @@ export const StageComponent = (_props: { stage: StageModel }) => {
             className="stage"
             id={_props.stage.name.toLowerCase()}
             onDragOver={() => dispatchNewFinalPosition(_props.stage)}
+            onDragEnd={() => dispatchNewFinalPosition(null)}
         >
             <h2>{_props.stage.name}</h2>
             <DropSpace

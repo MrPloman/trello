@@ -21,10 +21,11 @@ const dragSlice = createSlice({
                     newPosition?: number;
                 }>
             ) => {
-                console.log(action.payload);
-                if (action.payload.newStage) {
-                    state.newStage = action.payload.newStage;
-                }
+                if (action.payload.draggedCard) state.draggedCard = action.payload.draggedCard;
+                if (action.payload.oldStage) state.oldStage = action.payload.oldStage;
+                if (action.payload.newStage) state.newStage = action.payload.newStage;
+                if (action.payload.oldPosition) state.oldPosition = action.payload.oldPosition;
+                if (action.payload.newPosition) state.newPosition = action.payload.newPosition;
             }
         );
         builder.addCase(removeDrag, (state) => {

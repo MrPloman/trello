@@ -1,6 +1,7 @@
-import { useAppDispatch } from "../../hooks/useTasksDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
+import { updateDrag } from "../../store/actions/dragActions";
 import { updateTask } from "../../store/actions/taskActions";
 import "./task.scss";
 
@@ -9,18 +10,37 @@ export const TaskComponent = (_props: {
     currentPosition: number;
     currentStage: StageModel;
 }) => {
+    const dragState = useAppSelector((state) => state.dragState);
+
     const dispatch = useAppDispatch();
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
     };
+    const emitNewMovement = () => {
+        if (
+            dragState &&
+            dragState.draggedCard &&
+            dragState.newPosition !== null &&
+            dragState.oldPosition !== null &&
+            dragState.newStage &&
+            dragState.oldStage
+        )
+            dispatch(
+                updateTask({
+                    updatedTask: dragState.draggedCard,
+                    origin: dragState.oldStage,
+                    destination: dragState.newStage,
+                    lastPosition: dragState.oldPosition,
+                    newPosition: dragState.newPosition,
+                })
+            );
+    };
     const setNewPositionCard = () => {
         dispatch(
-            updateTask({
-                updatedTask: _props.task,
-                newPosition: _props.currentPosition,
-                origin: _props.currentStage,
-                destination: _props.currentStage,
-                lastPosition: _props.currentPosition,
+            updateDrag({
+                draggedCard: _props.task,
+                oldPosition: _props.currentPosition,
+                oldStage: _props.currentStage,
             })
         );
         // _props.setDragState({
@@ -37,6 +57,9 @@ export const TaskComponent = (_props: {
             className="task"
             draggable
             onDragStart={() => setNewPositionCard()}
+            onDragEnd={() => {
+                emitNewMovement();
+            }}
         >
             <header>
                 <span id="priority" className={`priority-${_props.task.priority}`}>
