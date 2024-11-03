@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
+import { useAppDispatch } from "../../hooks/useTasksDispatch";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
 import { updateDrag } from "../../store/actions/dragActions";
-import { removeTask, updateTask } from "../../store/actions/taskActions";
+import { removeTask } from "../../store/actions/taskActions";
 import "./task.scss";
 
 export const TaskComponent = (_props: {
@@ -10,7 +10,7 @@ export const TaskComponent = (_props: {
     currentPosition: number;
     currentStage: StageModel;
 }) => {
-    const dragState = useAppSelector((state) => state.dragState);
+    // const dragState = useAppSelector((state) => state.dragState);
 
     const dispatch = useAppDispatch();
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
@@ -19,26 +19,7 @@ export const TaskComponent = (_props: {
     const emitRemoveCard = () => {
         dispatch(removeTask({ taskPosition: _props.currentPosition, stage: _props.currentStage }));
     };
-    const emitNewMovement = () => {
-        console.log(dragState);
-        if (
-            dragState &&
-            dragState.draggedCard &&
-            dragState.newPosition !== undefined &&
-            dragState.oldPosition !== undefined &&
-            dragState.newStage &&
-            dragState.oldStage
-        )
-            dispatch(
-                updateTask({
-                    updatedTask: dragState.draggedCard,
-                    origin: dragState.oldStage,
-                    destination: dragState.newStage,
-                    lastPosition: dragState.oldPosition,
-                    newPosition: dragState.newPosition,
-                })
-            );
-    };
+
     const setNewPositionCard = () => {
         dispatch(
             updateDrag({
@@ -61,9 +42,9 @@ export const TaskComponent = (_props: {
             className="task"
             draggable
             onDragStart={() => setNewPositionCard()}
-            onDragEnd={() => {
-                emitNewMovement();
-            }}
+            // onDragEnd={() => {
+            //     emitNewMovement();
+            // }}
         >
             <header>
                 <div id="column1">

@@ -1,11 +1,37 @@
 import { useState } from "react";
 import "./dropSpace.scss";
-import { useAppDispatch } from "../../hooks/useTasksDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
 import { updateDrag } from "../../store/actions/dragActions";
+import { updateTask } from "../../store/actions/taskActions";
 
 export const DropSpace = (_props: { position: number }) => {
     const [showDropSpace, setShowDropSpace] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+    const dragState = useAppSelector((state) => state.dragState);
+
+    const setNewCardPosition = () => {
+        console.log(dragState);
+
+        if (
+            dragState &&
+            dragState.draggedCard &&
+            dragState.newPosition !== undefined &&
+            dragState.oldPosition !== undefined &&
+            dragState.newStage &&
+            dragState.oldStage
+        ) {
+            dispatch(
+                updateTask({
+                    updatedTask: dragState.draggedCard,
+                    origin: dragState.oldStage,
+                    destination: dragState.newStage,
+                    lastPosition: dragState.oldPosition,
+                    newPosition: dragState.newPosition,
+                })
+            );
+            setShowDropSpace(false);
+        }
+    };
 
     const showSpace = (show: boolean) => {
         setShowDropSpace(show);
@@ -38,7 +64,13 @@ export const DropSpace = (_props: { position: number }) => {
             onDragLeave={() => {
                 showSpace(false);
             }}
-            onDragOver={() => lastLocation(_props.position)}
+            onDragOver={(e) => {
+                e.preventDefault();
+                lastLocation(_props.position);
+            }}
+            onDrop={() => {
+                setNewCardPosition();
+            }}
             className={showDropSpace ? "show_space" : "hide_space"}
         ></section>
     );
