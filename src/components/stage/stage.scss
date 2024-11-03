@@ -1,6 +1,6 @@
 .stage {
     padding: 20px;
-    min-width: 500px;
+    min-width: 300px;
     border-radius: 10px;
     border: 3px solid rgba(231, 231, 231, 0.376);
     margin: 0 20px;
@@ -12,5 +12,7 @@
         padding: 10px;
     }
     #tasks {
+        transition: 1s;
+        opacity: 1;
     }
 }

@@ -6,6 +6,7 @@ export class TaskModel {
     public description: string;
     public tags: string[];
     public priority: Priority;
+    public users?: string[];
     public checkList?: string[];
     public attachedFiles?: string[];
     constructor(
@@ -14,6 +15,7 @@ export class TaskModel {
         description: string,
         tags: string[],
         priority: Priority,
+        users?: string[],
         checklist?: string[],
         attachedFiles?: string[]
     ) {
@@ -21,6 +23,7 @@ export class TaskModel {
         this.name = name;
         this.description = description;
         this.priority = priority;
+        this.users = users;
         this.tags = tags;
         this.checkList = checklist;
         this.attachedFiles = attachedFiles;

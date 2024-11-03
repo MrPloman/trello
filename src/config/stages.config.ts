@@ -10,6 +10,7 @@ export const StagesConfig: StageModel[] = [
                 description: "",
                 priority: "high",
                 tags: ["React", "Frontend"],
+                users: ["Pol"],
             },
             {
                 _id: 2,

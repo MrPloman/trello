@@ -13,7 +13,7 @@ export const BoardComponent = () => {
                     ? stages.map((stage: StageModel, index: number) => (
                           <StageComponent key={index} stage={stage}></StageComponent>
                       ))
-                    : null}
+                    : undefined}
             </div>
         </>
     );

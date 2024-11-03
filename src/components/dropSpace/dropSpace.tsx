@@ -10,9 +10,9 @@ export const DropSpace = (_props: { position: number }) => {
     const showSpace = (show: boolean) => {
         setShowDropSpace(show);
     };
-    const lastLocation = (position: number | null) => {
-        console.log();
-        if (position !== null) {
+    const lastLocation = (position: number | undefined) => {
+        console.log(position);
+        if (position !== undefined) {
             dispatch(updateDrag({ newPosition: position }));
             // _props.setDragState({
             //     draggedCard: _props.dragState.draggedCard,
@@ -25,7 +25,7 @@ export const DropSpace = (_props: { position: number }) => {
             // _props.setDragState({
             //     draggedCard: _props.dragState.draggedCard,
             //     draggedStage: _props.dragState.draggedStage,
-            //     draggedPosition: null,
+            //     draggedPosition: undefined,
             // });
         }
     };

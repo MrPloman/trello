@@ -26,5 +26,8 @@ export const updateTask = createAction(
 );
 export const removeTask = createAction(
     REMOVE_TASK,
-    withPayloadType<{ removedTask: TaskModel; stageOrigin: StageModel; taskPosition: number }>()
+    withPayloadType<{
+        taskPosition: number;
+        stage: StageModel;
+    }>()
 );

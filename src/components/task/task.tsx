@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
 import { updateDrag } from "../../store/actions/dragActions";
-import { updateTask } from "../../store/actions/taskActions";
+import { removeTask, updateTask } from "../../store/actions/taskActions";
 import "./task.scss";
 
 export const TaskComponent = (_props: {
@@ -16,12 +16,16 @@ export const TaskComponent = (_props: {
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
     };
+    const emitRemoveCard = () => {
+        dispatch(removeTask({ taskPosition: _props.currentPosition, stage: _props.currentStage }));
+    };
     const emitNewMovement = () => {
+        console.log(dragState);
         if (
             dragState &&
             dragState.draggedCard &&
-            dragState.newPosition !== null &&
-            dragState.oldPosition !== null &&
+            dragState.newPosition !== undefined &&
+            dragState.oldPosition !== undefined &&
             dragState.newStage &&
             dragState.oldStage
         )
@@ -62,24 +66,31 @@ export const TaskComponent = (_props: {
             }}
         >
             <header>
-                <span id="priority" className={`priority-${_props.task.priority}`}>
-                    {_props.task.priority}
-                </span>
-                <h4 id="title"> {_props.task.name}</h4>
-                <div id="tags">
-                    {_props.task.tags.map((tag, index) => (
-                        <span className="tag" key={index}>
-                            {tag}
-                        </span>
-                    ))}
+                <div id="column1">
+                    <span id="priority" className={`priority-${_props.task.priority}`}>
+                        {_props.task.priority}
+                    </span>
+                    <h4 id="title"> {_props.task.name}</h4>
+                    <div id="tags">
+                        {_props.task.tags.map((tag, index) => (
+                            <span className="tag" key={index}>
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
                 </div>
+                <div onClick={() => emitRemoveCard()}>X</div>
             </header>
             <footer>
                 <div id="checklist">
                     {_props.task.checkList
                         ? getNumberOfCheckedTasks(_props.task.checkList.length)
                         : 0}
-                    / {_props.task.checkList ? _props.task.checkList?.length : null}
+                    / {_props.task.checkList ? _props.task.checkList?.length : undefined}
+                </div>
+                <div id="users">
+                    {_props.task.users ? _props.task.users.map((user) => user) : undefined}
+                    <span></span>
                 </div>
             </footer>
         </article>

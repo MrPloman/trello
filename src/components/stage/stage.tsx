@@ -9,12 +9,12 @@ import { updateDrag } from "../../store/actions/dragActions";
 export const StageComponent = (_props: { stage: StageModel }) => {
     const dispatch = useAppDispatch();
 
-    // const setDraggedCardStagePosition = (stage: StageModel | null) => {
+    // const setDraggedCardStagePosition = (stage: StageModel | undefined) => {
     //     if (stage) {
     //         dispatch(updateDrag({ newStage: stage }));
     //     }
     // };
-    const dispatchNewFinalPosition = (stage: StageModel | null) => {
+    const dispatchNewFinalPosition = (stage: StageModel | undefined) => {
         if (stage) {
             dispatch(updateDrag({ newStage: stage }));
         } else {
@@ -22,10 +22,10 @@ export const StageComponent = (_props: { stage: StageModel }) => {
         }
 
         // if (
-        //     _props.dragState.draggedCard !== null &&
-        //     _props.dragState.originPosition !== null &&
-        //     _props.dragState.originStage !== null &&
-        //     _props.dragState.draggedPosition !== null
+        //     _props.dragState.draggedCard !== undefined &&
+        //     _props.dragState.originPosition !== undefined &&
+        //     _props.dragState.originStage !== undefined &&
+        //     _props.dragState.draggedPosition !== undefined
         // ) {
         //     console.log({
         //         updatedTask: _props.dragState.draggedCard,
@@ -50,7 +50,7 @@ export const StageComponent = (_props: { stage: StageModel }) => {
             className="stage"
             id={_props.stage.name.toLowerCase()}
             onDragOver={() => dispatchNewFinalPosition(_props.stage)}
-            onDragEnd={() => dispatchNewFinalPosition(null)}
+            onDragEnd={() => dispatchNewFinalPosition(undefined)}
         >
             <h2>{_props.stage.name}</h2>
             <DropSpace
@@ -66,7 +66,7 @@ export const StageComponent = (_props: { stage: StageModel }) => {
                         currentStage={_props.stage}
                         currentPosition={index}
                     ></TaskComponent>
-                    <DropSpace position={index} key={`dropSpace_${card._id}`}></DropSpace>
+                    <DropSpace position={index + 1} key={`dropSpace_${card._id}`}></DropSpace>
                 </Fragment>
             ))}
         </div>

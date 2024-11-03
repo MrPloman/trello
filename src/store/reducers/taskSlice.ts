@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
-import { initialTaskState } from "../state/taskState";
-import { createTask, updateTask } from "../actions/taskActions";
+import { initialTaskState } from "../state";
+import { createTask, removeTask, updateTask } from "../actions/taskActions";
 
 const tasksSlice = createSlice({
     name: "tasks",
@@ -38,7 +38,7 @@ const tasksSlice = createSlice({
             ) => {
                 const task = action.payload.updatedTask;
                 const newPosition = action.payload.newPosition;
-                const lastPosition = action.payload.newPosition;
+                const lastPosition = action.payload.lastPosition;
                 const destinationName = action.payload.destination.name;
                 const originName = action.payload.origin.name;
                 state.forEach((stage) => {
@@ -46,7 +46,21 @@ const tasksSlice = createSlice({
                         stage.cards.splice(newPosition, 0, task);
                     }
                     if (stage.name === originName) {
-                        stage.cards.splice(lastPosition, 1);
+                        stage.cards = stage.cards.filter((card, index) => {
+                            if (index !== lastPosition) return card;
+                        });
+                    }
+                });
+            }
+        );
+        builder.addCase(
+            removeTask,
+            (state, action: PayloadAction<{ taskPosition: number; stage: StageModel }>) => {
+                state.forEach((stageArray) => {
+                    if (action.payload.stage.name === stageArray.name) {
+                        stageArray.cards = stageArray.cards.filter((card, index) => {
+                            if (index !== action.payload.taskPosition) return card;
+                        });
                     }
                 });
             }
