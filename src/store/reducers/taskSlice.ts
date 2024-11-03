@@ -42,13 +42,21 @@ const tasksSlice = createSlice({
                 const destinationName = action.payload.destination.name;
                 const originName = action.payload.origin.name;
                 state.forEach((stage) => {
-                    if (stage.name === destinationName) {
-                        stage.cards.splice(newPosition, 0, task);
-                    }
+                    // if (destinationName === originName) {
+                    //     stage.cards = stage.cards.filter((card, index) => {
+                    //         if (index !== lastPosition) return card;
+                    //     });
+                    //     stage.cards.splice(newPosition, 0, task);
+                    // } else {
+
                     if (stage.name === originName) {
                         stage.cards = stage.cards.filter((card, index) => {
                             if (index !== lastPosition) return card;
                         });
+                    }
+                    if (stage.name === destinationName) {
+                        stage.cards.splice(newPosition, 0, task);
+                        //     }
                     }
                 });
             }
