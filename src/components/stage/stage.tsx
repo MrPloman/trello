@@ -9,41 +9,12 @@ import { updateDrag } from "../../store/actions/dragActions";
 export const StageComponent = (_props: { stage: StageModel }) => {
     const dispatch = useAppDispatch();
 
-    // const setDraggedCardStagePosition = (stage: StageModel | undefined) => {
-    //     if (stage) {
-    //         dispatch(updateDrag({ newStage: stage }));
-    //     }
-    // };
     const dispatchNewFinalPosition = (stage: StageModel | undefined) => {
         if (stage) {
             dispatch(updateDrag({ newStage: stage }));
         } else {
             dispatch(updateDrag({ newStage: undefined }));
         }
-
-        // if (
-        //     _props.dragState.draggedCard !== undefined &&
-        //     _props.dragState.originPosition !== undefined &&
-        //     _props.dragState.originStage !== undefined &&
-        //     _props.dragState.draggedPosition !== undefined
-        // ) {
-        //     console.log({
-        //         updatedTask: _props.dragState.draggedCard,
-        //         destination: stage,
-        //         lastPosition: _props.dragState.originPosition,
-        //         origin: _props.dragState.originStage,
-        //         newPosition: _props.dragState.draggedPosition,
-        //     });
-        //     dispatch(
-        //         updateTask({
-        //             updatedTask: _props.dragState.draggedCard,
-        //             destination: stage,
-        //             lastPosition: _props.dragState.originPosition,
-        //             origin: _props.dragState.originStage,
-        //             newPosition: _props.dragState.draggedPosition,
-        //         })
-        //     );
-        // }
     };
     return (
         <div
@@ -54,6 +25,7 @@ export const StageComponent = (_props: { stage: StageModel }) => {
         >
             <h2>{_props.stage.name}</h2>
             <DropSpace
+                numberOfTasks={_props.stage.cards.length}
                 position={0}
                 key={`dropSpace_top_${_props.stage.name.toLowerCase()}`}
             ></DropSpace>
@@ -66,7 +38,11 @@ export const StageComponent = (_props: { stage: StageModel }) => {
                         currentStage={_props.stage}
                         currentPosition={index}
                     ></TaskComponent>
-                    <DropSpace position={index + 1} key={`dropSpace_${card._id}`}></DropSpace>
+                    <DropSpace
+                        numberOfTasks={_props.stage.cards.length}
+                        position={index + 1}
+                        key={`dropSpace_${card._id}`}
+                    ></DropSpace>
                 </Fragment>
             ))}
         </div>

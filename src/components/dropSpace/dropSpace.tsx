@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
 import { updateDrag } from "../../store/actions/dragActions";
 import { updateTask } from "../../store/actions/taskActions";
 
-export const DropSpace = (_props: { position: number }) => {
+export const DropSpace = (_props: { position: number; numberOfTasks: number }) => {
     const [showDropSpace, setShowDropSpace] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const dragState = useAppSelector((state) => state.dragState);
@@ -71,7 +71,9 @@ export const DropSpace = (_props: { position: number }) => {
             onDrop={() => {
                 setNewCardPosition();
             }}
-            className={showDropSpace ? "show_space" : "hide_space"}
+            className={`${showDropSpace ? "show_space" : "hide_space"} ${
+                _props.numberOfTasks === 0 ? "notasks" : "normal"
+            }`}
         ></section>
     );
 };
