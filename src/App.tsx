@@ -3,6 +3,7 @@ import "./App.scss";
 import { BoardComponent } from "./components/board/board";
 import store from "./store/store";
 import { NewTaskButton } from "./components/newTaskButton/newTaskButton";
+import { ModalComponent } from "./components/modal/modal";
 
 function App() {
     // const dispatch = useAppDispatch();
@@ -13,6 +14,7 @@ function App() {
                 <NewTaskButton></NewTaskButton>
 
                 <BoardComponent></BoardComponent>
+                <ModalComponent></ModalComponent>
             </Provider>
         </>
     );
