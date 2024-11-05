@@ -1,0 +1,57 @@
+button,
+input[type="submit"],
+input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+.button_plus {
+    position: fixed;
+    width: 65px;
+    height: 65px;
+    background: #fff;
+    cursor: pointer;
+    border: 5px solid #d5d5d5;
+    bottom: 50px;
+    right: 50px;
+    /* Mittig */
+    z-index: 1000;
+    border-radius: 100%;
+}
+
+.button_plus:after {
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 4px;
+    width: 50%;
+    background: #c8c8c8;
+    top: 50%;
+    left: 50%;
+}
+
+.button_plus:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #a2a2a2;
+    height: 50%;
+    width: 4px;
+}
+
+.button_plus:hover:before,
+.button_plus:hover:after {
+    background: #fff;
+    transition: 0.2s;
+}
+
+.button_plus:hover {
+    background-color: #095776;
+    transition: 0.2s;
+}

@@ -58,17 +58,18 @@ export const DropSpace = (_props: { position: number; numberOfTasks: number }) =
 
     return (
         <section
-            onDragEnter={() => {
-                showSpace(true);
-            }}
             onDragLeave={() => {
-                showSpace(false);
+                setTimeout(() => {
+                    showSpace(false);
+                }, 500);
             }}
             onDragOver={(e) => {
+                showSpace(true);
                 e.preventDefault();
                 lastLocation(_props.position);
             }}
             onDrop={() => {
+                showSpace(false);
                 setNewCardPosition();
             }}
             className={`${showDropSpace ? "show_space" : "hide_space"} ${
