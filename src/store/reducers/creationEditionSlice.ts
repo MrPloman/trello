@@ -14,7 +14,7 @@ const creationEditionSlice = createSlice({
             (
                 state,
                 action: PayloadAction<{
-                    isNew: boolean;
+                    isNew: boolean | undefined;
                     task?: TaskModel;
                     stage?: StageModel;
                     currentPosition?: number;
@@ -26,12 +26,13 @@ const creationEditionSlice = createSlice({
                     stage: action.payload.stage,
                     currentPosition: action.payload.currentPosition,
                 };
+                return state;
             }
         );
 
         builder.addCase(cancelCreationEdition, (state) => {
             state = {
-                isNew: true,
+                isNew: undefined,
                 task: undefined,
                 stage: undefined,
                 currentPosition: undefined,

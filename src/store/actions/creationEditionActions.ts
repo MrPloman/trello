@@ -4,7 +4,6 @@ import { StageModel } from "../../models/stage.model";
 
 const OPEN_CREATION_EDITION = "OPEN_CREATION_EDITION";
 const UPDATE_CREATION_EDITION = "UPDATE_CREATION_EDITION";
-
 const CANCEL_CREATION_EDITION = "CANCEL_CREATION_EDITION";
 
 function withPayloadType<T>() {
@@ -13,7 +12,7 @@ function withPayloadType<T>() {
 export const openCreationEdition = createAction(
     OPEN_CREATION_EDITION,
     withPayloadType<{
-        isNew: boolean;
+        isNew: boolean | undefined;
         task?: TaskModel;
         stage?: StageModel;
         currentPosition?: number;
@@ -22,7 +21,7 @@ export const openCreationEdition = createAction(
 export const updateCreationEdition = createAction(
     UPDATE_CREATION_EDITION,
     withPayloadType<{
-        isNew: boolean;
+        isNew: boolean | undefined;
         task: TaskModel;
         stage?: StageModel;
         currentPosition?: StageModel;

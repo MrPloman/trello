@@ -1,6 +1,7 @@
 import { useAppDispatch } from "../../hooks/useTasksDispatch";
 import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
+import { openCreationEdition } from "../../store/actions/creationEditionActions";
 import { updateDrag } from "../../store/actions/dragActions";
 import { removeTask } from "../../store/actions/taskActions";
 import "./task.scss";
@@ -42,6 +43,16 @@ export const TaskComponent = (_props: {
             className="task"
             draggable
             onDragStart={() => setNewPositionCard()}
+            onClick={() => {
+                dispatch(
+                    openCreationEdition({
+                        isNew: false,
+                        task: _props.task,
+                        currentPosition: _props.currentPosition,
+                        stage: _props.currentStage,
+                    })
+                );
+            }}
             // onDragEnd={() => {
             //     emitNewMovement();
             // }}

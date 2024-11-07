@@ -17,8 +17,8 @@ export const initialDragState: {
     newPosition: undefined,
 };
 export const initialCreationEditionState: {
-    isNew: boolean;
+    isNew: boolean | undefined;
     task: TaskModel | undefined;
     stage: StageModel | undefined;
     currentPosition: number | undefined;
-} = { isNew: false, task: undefined, stage: undefined, currentPosition: undefined };
+} = { isNew: undefined, task: undefined, stage: undefined, currentPosition: undefined };
