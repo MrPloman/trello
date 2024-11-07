@@ -6,8 +6,6 @@ import { removeTask, updateTask } from "../../store/actions/taskActions";
 import { StagesConfig } from "../../config/stages.config";
 
 export const ModalComponent = () => {
-    const taskState = useAppSelector((state) => state.tasksState);
-
     const creationEditionState = useAppSelector((state) => state.creationEditionState);
     console.log(creationEditionState);
 
@@ -50,7 +48,7 @@ export const ModalComponent = () => {
         }));
     };
 
-    const updateTaskForm = (e: any) => {
+    const updateTaskForm = (e: React.MouseEvent<unknown>) => {
         e.preventDefault();
         console.log(formTaskState, creationEditionState);
         if (
@@ -184,9 +182,13 @@ export const ModalComponent = () => {
                                 ) : null}
 
                                 {creationEditionState.isNew ? (
-                                    <button onClick={(e) => updateTaskForm(e)}>Create</button>
+                                    <button onClick={($event) => updateTaskForm($event)}>
+                                        Create
+                                    </button>
                                 ) : (
-                                    <button onClick={(e) => updateTaskForm(e)}>Update</button>
+                                    <button onClick={($event) => updateTaskForm($event)}>
+                                        Update
+                                    </button>
                                 )}
                             </footer>
                         </form>
