@@ -10,8 +10,6 @@ export const DropSpace = (_props: { position: number; numberOfTasks: number }) =
     const dragState = useAppSelector((state) => state.dragState);
 
     const setNewCardPosition = () => {
-        console.log(dragState);
-
         if (
             dragState &&
             dragState.draggedCard &&
@@ -37,22 +35,8 @@ export const DropSpace = (_props: { position: number; numberOfTasks: number }) =
         setShowDropSpace(show);
     };
     const lastLocation = (position: number | undefined) => {
-        console.log(position);
         if (position !== undefined) {
             dispatch(updateDrag({ newPosition: position }));
-            // _props.setDragState({
-            //     draggedCard: _props.dragState.draggedCard,
-            //     draggedStage: _props.dragState.draggedStage,
-            //     draggedPosition: _props.position,
-            //     originPosition: _props.dragState.originPosition,
-            //     originStage: _props.dragState.originStage,
-            // });
-        } else {
-            // _props.setDragState({
-            //     draggedCard: _props.dragState.draggedCard,
-            //     draggedStage: _props.dragState.draggedStage,
-            //     draggedPosition: undefined,
-            // });
         }
     };
 

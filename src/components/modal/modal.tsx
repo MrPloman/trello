@@ -7,8 +7,6 @@ import { StagesConfig } from "../../config/stages.config";
 
 export const ModalComponent = () => {
     const creationEditionState = useAppSelector((state) => state.creationEditionState);
-    console.log(creationEditionState);
-
     const [formTaskState, setFormTaskState] = useState({
         name: creationEditionState.task?.name,
         description: creationEditionState.task?.description,
@@ -24,7 +22,6 @@ export const ModalComponent = () => {
                 ? creationEditionState.task?.priority
                 : undefined,
         });
-        console.log(formTaskState);
     }, [creationEditionState]);
     const dispatch = useAppDispatch();
 
@@ -36,7 +33,6 @@ export const ModalComponent = () => {
                     return stage;
                 }
             });
-            console.log(stage);
             if (stage) {
                 dispatch(
                     createTask({
@@ -49,18 +45,6 @@ export const ModalComponent = () => {
                         },
                         currentStage: stage,
                     })
-                    // createTask({
-                    //     updatedTask: {
-                    //         ...creationEditionState.task,
-                    //         name: formTaskState.name,
-                    //         description: formTaskState.description ? formTaskState.description : "",
-                    //         priority: formTaskState.priority,
-                    //     },
-                    //     origin: creationEditionState.stage,
-                    //     destination: stage,
-                    //     newPosition: 0,
-                    //     lastPosition: creationEditionState.currentPosition,
-                    // })
                 );
                 cancelForm();
             }
@@ -89,7 +73,6 @@ export const ModalComponent = () => {
 
     const updateTaskForm = (e: React.MouseEvent<unknown>) => {
         e.preventDefault();
-        console.log(formTaskState, creationEditionState);
         if (
             formTaskState.name &&
             formTaskState.priority &&
@@ -103,7 +86,6 @@ export const ModalComponent = () => {
                     return stage;
                 }
             });
-            console.log(stage);
             if (stage) {
                 dispatch(
                     updateTask({
