@@ -10,6 +10,7 @@ export const StagesConfig: StageModel[] = [
                 description: "",
                 priority: "high",
                 tags: ["React", "Frontend"],
+                points: 1,
                 users: ["Pol"],
             },
             {
@@ -17,6 +18,8 @@ export const StagesConfig: StageModel[] = [
                 name: "Create Other things",
                 description: "",
                 priority: "medium",
+                points: 1,
+
                 tags: ["React", "Frontend"],
             },
             {
@@ -24,6 +27,8 @@ export const StagesConfig: StageModel[] = [
                 name: "uPDATE",
                 description: "",
                 priority: "low",
+                points: 1,
+
                 tags: ["React", "Frontend"],
             },
         ],
@@ -36,6 +41,8 @@ export const StagesConfig: StageModel[] = [
                 name: "Remove",
                 description: "",
                 priority: "high",
+                points: 1,
+
                 tags: [],
             },
             {
@@ -43,6 +50,8 @@ export const StagesConfig: StageModel[] = [
                 name: "Select any problems",
                 description: "",
                 priority: "medium",
+                points: 1,
+
                 tags: ["React", "Frontend"],
             },
             {
@@ -50,6 +59,8 @@ export const StagesConfig: StageModel[] = [
                 name: "Delete",
                 description: "",
                 priority: "low",
+                points: 1,
+
                 tags: ["React", "Frontend"],
             },
         ],

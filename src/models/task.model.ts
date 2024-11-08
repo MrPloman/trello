@@ -1,3 +1,4 @@
+import { Points } from "../types/points.types";
 import { Priority } from "../types/priority.types";
 
 export class TaskModel {
@@ -6,6 +7,7 @@ export class TaskModel {
     public description: string;
     public tags: string[];
     public priority: Priority;
+    public points: Points;
     public users?: string[];
     public checkList?: string[];
     public attachedFiles?: string[];
@@ -14,6 +16,7 @@ export class TaskModel {
         name: string,
         description: string,
         tags: string[],
+        points: Points,
         priority: Priority,
         users?: string[],
         checklist?: string[],
@@ -24,6 +27,7 @@ export class TaskModel {
         this.description = description;
         this.priority = priority;
         this.users = users;
+        this.points = points;
         this.tags = tags;
         this.checkList = checklist;
         this.attachedFiles = attachedFiles;

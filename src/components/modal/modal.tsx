@@ -12,6 +12,7 @@ export const ModalComponent = () => {
         description: creationEditionState.task?.description,
         stage: creationEditionState.stage?.name,
         priority: creationEditionState.task?.priority,
+        points: creationEditionState.task?.points,
     });
     useEffect(() => {
         setFormTaskState({
@@ -21,13 +22,21 @@ export const ModalComponent = () => {
             priority: creationEditionState.task?.priority
                 ? creationEditionState.task?.priority
                 : undefined,
+            points: creationEditionState.task?.points
+                ? creationEditionState.task?.points
+                : undefined,
         });
     }, [creationEditionState]);
     const dispatch = useAppDispatch();
 
     const createTaskForm = (e: React.MouseEvent<unknown>) => {
         e.preventDefault();
-        if (formTaskState.name && formTaskState.priority && formTaskState.stage) {
+        if (
+            formTaskState.name &&
+            formTaskState.priority &&
+            formTaskState.stage &&
+            formTaskState.points
+        ) {
             const stage = StagesConfig.find((stage) => {
                 if (stage.name === formTaskState.stage) {
                     return stage;
@@ -41,6 +50,7 @@ export const ModalComponent = () => {
                             name: formTaskState.name,
                             description: formTaskState.description ? formTaskState.description : "",
                             priority: formTaskState.priority,
+                            points: formTaskState.points,
                             tags: [],
                         },
                         currentStage: stage,
@@ -65,6 +75,7 @@ export const ModalComponent = () => {
 
     const handleFormUpdate = (e: { target: { value: string; name: string } }) => {
         const { value, name } = e.target;
+        console.log(value, name);
         setFormTaskState((lastState) => ({
             ...lastState,
             [name]: value,
@@ -77,6 +88,7 @@ export const ModalComponent = () => {
             formTaskState.name &&
             formTaskState.priority &&
             formTaskState.stage &&
+            formTaskState.points &&
             creationEditionState.stage &&
             creationEditionState.task &&
             creationEditionState.currentPosition !== undefined
@@ -94,6 +106,7 @@ export const ModalComponent = () => {
                             name: formTaskState.name,
                             description: formTaskState.description ? formTaskState.description : "",
                             priority: formTaskState.priority,
+                            points: formTaskState.points,
                         },
                         origin: creationEditionState.stage,
                         destination: stage,
@@ -106,7 +119,13 @@ export const ModalComponent = () => {
         }
     };
     const cancelForm = () => {
-        setFormTaskState({ name: "", description: "", stage: "", priority: undefined });
+        setFormTaskState({
+            name: "",
+            description: "",
+            stage: "",
+            priority: undefined,
+            points: undefined,
+        });
         dispatch(cancelCreationEdition());
     };
 
@@ -171,6 +190,28 @@ export const ModalComponent = () => {
                                             <option value="done">Done </option>
                                             <option value="uploaded">Uploaded </option>
                                             <option value="delivered">Delivered </option>
+                                        </select>
+                                    </div>
+                                    <div className="selector">
+                                        <label htmlFor="points">Points</label>
+                                        <select
+                                            name="points"
+                                            id="pointsSelector"
+                                            value={formTaskState.points}
+                                            onChange={handleFormUpdate}
+                                        >
+                                            <option value="">Select an option</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="8">8</option>
+                                            <option value="13">13</option>
+                                            <option value="21">21</option>
+                                            <option value="34">34</option>
+                                            <option value="55">55</option>
+                                            <option value="100">100</option>
                                         </select>
                                     </div>
                                     <div className="selector">
