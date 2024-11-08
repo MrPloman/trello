@@ -6,4 +6,4 @@ export type Stages =
     | "test"
     | "done"
     | "uploaded"
-    | "delivered";
+    | "approved";

@@ -75,7 +75,6 @@ export const ModalComponent = () => {
 
     const handleFormUpdate = (e: { target: { value: string; name: string } }) => {
         const { value, name } = e.target;
-        console.log(value, name);
         setFormTaskState((lastState) => ({
             ...lastState,
             [name]: value,
@@ -189,7 +188,7 @@ export const ModalComponent = () => {
                                             <option value="test">Test </option>
                                             <option value="done">Done </option>
                                             <option value="uploaded">Uploaded </option>
-                                            <option value="delivered">Delivered </option>
+                                            <option value="approved">Approved </option>
                                         </select>
                                     </div>
                                     <div className="selector">

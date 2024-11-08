@@ -8,6 +8,12 @@ import { updateDrag } from "../../store/actions/dragActions";
 
 export const StageComponent = (_props: { stage: StageModel }) => {
     const dispatch = useAppDispatch();
+    const getAllPoints = () => {
+        return _props.stage.cards.reduce(
+            (accumulator, currentValue) => Number(accumulator) + Number(currentValue.points),
+            0
+        );
+    };
 
     const dispatchNewFinalPosition = (stage: StageModel | undefined) => {
         if (stage) {
@@ -23,7 +29,10 @@ export const StageComponent = (_props: { stage: StageModel }) => {
             onDragOver={() => dispatchNewFinalPosition(_props.stage)}
             onDragEnd={() => dispatchNewFinalPosition(undefined)}
         >
-            <h2>{_props.stage.name}</h2>
+            <div id="title">
+                <h2>{_props.stage.name}</h2>
+                <span> Points: {getAllPoints()}</span>
+            </div>
             <DropSpace
                 numberOfTasks={_props.stage.cards.length}
                 position={0}

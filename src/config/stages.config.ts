@@ -86,7 +86,7 @@ export const StagesConfig: StageModel[] = [
         cards: [],
     },
     {
-        name: "delivered",
+        name: "approved",
         cards: [],
     },
 ];
