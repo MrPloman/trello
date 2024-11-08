@@ -3,7 +3,6 @@ import { StageModel } from "../../models/stage.model";
 import { TaskModel } from "../../models/task.model";
 import { openCreationEdition } from "../../store/actions/creationEditionActions";
 import { updateDrag } from "../../store/actions/dragActions";
-import { removeTask } from "../../store/actions/taskActions";
 import "./task.scss";
 
 export const TaskComponent = (_props: {
@@ -17,9 +16,6 @@ export const TaskComponent = (_props: {
     const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
         return numberOfTasks;
     };
-    const emitRemoveCard = () => {
-        dispatch(removeTask({ taskPosition: _props.currentPosition, stage: _props.currentStage }));
-    };
 
     const setNewPositionCard = () => {
         dispatch(
@@ -29,13 +25,6 @@ export const TaskComponent = (_props: {
                 oldStage: _props.currentStage,
             })
         );
-        // _props.setDragState({
-        //     draggedCard: _props.task,
-        //     draggedPosition: _props.dragState.draggedPosition,
-        //     draggedStage: _props.dragState.draggedStage,
-        //     originPosition: _props.currentPosition,
-        //     originStage: _props.currentStage,
-        // });
     };
     return (
         <article
@@ -53,9 +42,6 @@ export const TaskComponent = (_props: {
                     })
                 );
             }}
-            // onDragEnd={() => {
-            //     emitNewMovement();
-            // }}
         >
             <header>
                 <div id="column1">
@@ -71,7 +57,6 @@ export const TaskComponent = (_props: {
                         ))}
                     </div>
                 </div>
-                <div onClick={() => emitRemoveCard()}>X</div>
             </header>
             <footer>
                 <div id="checklist">

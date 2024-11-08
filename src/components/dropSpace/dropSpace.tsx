@@ -61,7 +61,7 @@ export const DropSpace = (_props: { position: number; numberOfTasks: number }) =
             onDragLeave={() => {
                 setTimeout(() => {
                     showSpace(false);
-                }, 500);
+                }, 1000);
             }}
             onDragOver={(e) => {
                 showSpace(true);

@@ -2,7 +2,7 @@ import "./modal.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/useTasksDispatch";
 import { cancelCreationEdition } from "../../store/actions/creationEditionActions";
 import { useEffect, useState } from "react";
-import { removeTask, updateTask } from "../../store/actions/taskActions";
+import { removeTask, updateTask, createTask } from "../../store/actions/taskActions";
 import { StagesConfig } from "../../config/stages.config";
 
 export const ModalComponent = () => {
@@ -27,6 +27,45 @@ export const ModalComponent = () => {
         console.log(formTaskState);
     }, [creationEditionState]);
     const dispatch = useAppDispatch();
+
+    const createTaskForm = (e: React.MouseEvent<unknown>) => {
+        e.preventDefault();
+        if (formTaskState.name && formTaskState.priority && formTaskState.stage) {
+            const stage = StagesConfig.find((stage) => {
+                if (stage.name === formTaskState.stage) {
+                    return stage;
+                }
+            });
+            console.log(stage);
+            if (stage) {
+                dispatch(
+                    createTask({
+                        createdTask: {
+                            _id: new Date().getMilliseconds(),
+                            name: formTaskState.name,
+                            description: formTaskState.description ? formTaskState.description : "",
+                            priority: formTaskState.priority,
+                            tags: [],
+                        },
+                        currentStage: stage,
+                    })
+                    // createTask({
+                    //     updatedTask: {
+                    //         ...creationEditionState.task,
+                    //         name: formTaskState.name,
+                    //         description: formTaskState.description ? formTaskState.description : "",
+                    //         priority: formTaskState.priority,
+                    //     },
+                    //     origin: creationEditionState.stage,
+                    //     destination: stage,
+                    //     newPosition: 0,
+                    //     lastPosition: creationEditionState.currentPosition,
+                    // })
+                );
+                cancelForm();
+            }
+        }
+    };
 
     const deleteTask = () => {
         cancelForm();
@@ -182,7 +221,7 @@ export const ModalComponent = () => {
                                 ) : null}
 
                                 {creationEditionState.isNew ? (
-                                    <button onClick={($event) => updateTaskForm($event)}>
+                                    <button onClick={($event) => createTaskForm($event)}>
                                         Create
                                     </button>
                                 ) : (
