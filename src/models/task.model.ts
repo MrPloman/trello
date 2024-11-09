@@ -9,7 +9,7 @@ export class TaskModel {
     public priority: Priority;
     public points: Points;
     public users?: string[];
-    public checkList?: string[];
+    public checkList?: { name: string; checked: boolean }[];
     public attachedFiles?: string[];
     constructor(
         _id: number,
@@ -19,7 +19,7 @@ export class TaskModel {
         points: Points,
         priority: Priority,
         users?: string[],
-        checklist?: string[],
+        checklist?: { name: string; checked: boolean }[],
         attachedFiles?: string[]
     ) {
         this._id = _id;

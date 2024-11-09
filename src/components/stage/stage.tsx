@@ -29,9 +29,9 @@ export const StageComponent = (_props: { stage: StageModel }) => {
             onDragOver={() => dispatchNewFinalPosition(_props.stage)}
             onDragEnd={() => dispatchNewFinalPosition(undefined)}
         >
-            <div id="title">
+            <div id="titleStage">
                 <h2>{_props.stage.name}</h2>
-                <span> Points: {getAllPoints()}</span>
+                <span id="currentPoints"> Points: {getAllPoints()}</span>
             </div>
             <DropSpace
                 numberOfTasks={_props.stage.cards.length}

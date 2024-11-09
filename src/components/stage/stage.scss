@@ -7,14 +7,33 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    #title {
+    background-color: rgba(235, 235, 235, 0.339);
+    #titleStage {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        background-color: rgba(241, 241, 241, 0.047);
+        border-radius: 10px;
+        padding: 0 10px 0 0;
+        border: solid 2px rgba(0, 0, 0, 0.251);
         h2 {
+            text-transform: capitalize;
+
+            color: rgb(255, 255, 255);
             margin: 0;
             padding: 10px;
+            font-size: 30px;
+            text-shadow: -1px 0 rgba(0, 0, 0, 0.425), 0 1px rgba(0, 0, 0, 0.329), 1px 0 black,
+                0 -1px black;
+
+            // -webkit-text-stroke: 2px black;
+        }
+        #currentPoints {
+            color: rgba(139, 139, 139, 0.468);
+            margin: 0;
+            padding: 10px;
+            font-size: 20px;
         }
     }
 

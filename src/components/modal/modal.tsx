@@ -169,6 +169,7 @@ export const ModalComponent = () => {
                                         onChange={handleFormUpdate}
                                     />
                                 </div>
+                                <div id="checklist"></div>
                                 <div id="inputSelectors">
                                     <div className="selector">
                                         <label htmlFor="stage">Stage</label>
