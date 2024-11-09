@@ -12,6 +12,20 @@ export const StagesConfig: StageModel[] = [
                 tags: ["React", "Frontend"],
                 points: 1,
                 users: ["Pol"],
+                checkList: [
+                    {
+                        name: "cosas",
+                        checked: true,
+                    },
+                    {
+                        name: "noway",
+                        checked: false,
+                    },
+                    {
+                        name: "no more",
+                        checked: false,
+                    },
+                ],
             },
             {
                 _id: 2,

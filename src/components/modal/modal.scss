@@ -7,6 +7,7 @@
     height: 100%;
 }
 #modal {
+    overflow-y: scroll;
     z-index: 101;
     position: fixed;
     margin: 0 auto;
@@ -18,7 +19,7 @@
     min-height: 70%;
     border-radius: 2%;
     border: 2px solid rgb(200, 200, 200);
-    padding: 40px;
+    padding: 40px 50px;
     #formTask {
         display: flex;
         flex-direction: column;
@@ -50,6 +51,8 @@
             }
         }
         #mainInformation {
+            overflow-y: scroll;
+            height: 450px;
             width: 100%;
             #inputDescription {
                 width: 100%;
@@ -72,6 +75,59 @@
                 }
                 input {
                     width: 100%;
+                }
+            }
+            #checklist {
+                #titleChecklist {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    button {
+                        height: fit-content;
+                        width: 25px;
+                        height: 25px;
+                        font-size: 20px;
+                        cursor: pointer;
+                        border: 2px solid black;
+                        border-radius: 100%;
+                    }
+                }
+                ul {
+                    margin: 0 auto;
+                    padding: 0 !important;
+                    display: flex;
+                    flex-direction: column;
+                    .taskCheckbox {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+                        .inputCheckbox {
+                            height: 25px;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 10px 0;
+                            width: 95%;
+
+                            input[type="text"] {
+                                padding: 10px 0 5px;
+                                font-size: 15px;
+                                width: 100%;
+                                border-bottom: 1px solid rgb(211, 211, 211);
+                            }
+                            input[type="checkbox"] {
+                                font-size: 15px;
+                                margin: 0 auto;
+                                margin-top: 5px;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
                 }
             }
             #inputSelectors {

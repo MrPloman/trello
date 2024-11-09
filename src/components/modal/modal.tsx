@@ -7,12 +7,14 @@ import { StagesConfig } from "../../config/stages.config";
 
 export const ModalComponent = () => {
     const creationEditionState = useAppSelector((state) => state.creationEditionState);
+    const [autofocus, setAutoFocus] = useState(false);
     const [formTaskState, setFormTaskState] = useState({
         name: creationEditionState.task?.name,
         description: creationEditionState.task?.description,
         stage: creationEditionState.stage?.name,
         priority: creationEditionState.task?.priority,
         points: creationEditionState.task?.points,
+        checklist: creationEditionState.task?.checkList,
     });
     useEffect(() => {
         setFormTaskState({
@@ -25,39 +27,27 @@ export const ModalComponent = () => {
             points: creationEditionState.task?.points
                 ? creationEditionState.task?.points
                 : undefined,
+            checklist: creationEditionState.task?.checkList
+                ? creationEditionState.task?.checkList
+                : [],
         });
     }, [creationEditionState]);
     const dispatch = useAppDispatch();
 
-    const createTaskForm = (e: React.MouseEvent<unknown>) => {
-        e.preventDefault();
-        if (
-            formTaskState.name &&
-            formTaskState.priority &&
-            formTaskState.stage &&
-            formTaskState.points
-        ) {
-            const stage = StagesConfig.find((stage) => {
-                if (stage.name === formTaskState.stage) {
-                    return stage;
-                }
+    const deleteChecklistElement = (position: number) => {
+        if (formTaskState.checklist && position !== undefined) {
+            setAutoFocus(false);
+            const checkList = formTaskState.checklist.filter((element, index) => {
+                if (position !== index) return element;
             });
-            if (stage) {
-                dispatch(
-                    createTask({
-                        createdTask: {
-                            _id: new Date().getMilliseconds(),
-                            name: formTaskState.name,
-                            description: formTaskState.description ? formTaskState.description : "",
-                            priority: formTaskState.priority,
-                            points: formTaskState.points,
-                            tags: [],
-                        },
-                        currentStage: stage,
-                    })
-                );
-                cancelForm();
-            }
+            // const index = formTaskState.checklist.findIndex((x, index) => index === position);
+            // console.log(index);
+            // const checkList = formTaskState.checklist.slice(index, 1);
+            // console.log(checkList);
+            setFormTaskState((lastState) => ({
+                ...lastState,
+                checklist: checkList,
+            }));
         }
     };
 
@@ -81,8 +71,52 @@ export const ModalComponent = () => {
         }));
     };
 
+    const addCheckbox = (e: React.MouseEvent<unknown>) => {
+        e.preventDefault();
+        if (formTaskState && formTaskState.checklist) {
+            const newCheck = { name: "", checked: false };
+            const newCheckList = [newCheck, ...formTaskState.checklist];
+            setFormTaskState((lastState) => ({
+                ...lastState,
+                checklist: newCheckList,
+            }));
+        }
+    };
+
+    const handleCheckboxNameFormUpdate = (e: { target: { value: string } }, position: number) => {
+        const { value } = e.target;
+        setAutoFocus(true);
+        const checklist = formTaskState?.checklist?.map((element, index) => {
+            if (index === position) element = { ...element, name: value };
+            return element;
+        });
+        setFormTaskState((lastState) => ({
+            ...lastState,
+            checklist,
+        }));
+    };
+
+    const handleCheckboxFormUpdate = (
+        e: { target: { value: boolean; name: string } },
+        position: number
+    ) => {
+        console.log(position);
+        const { value, name } = e.target;
+        console.log(name);
+        const checklist = formTaskState?.checklist?.map((element, index) => {
+            if (index === position) element = { name: e.target.name, checked: value };
+            return element;
+        });
+        setFormTaskState((lastState) => ({
+            ...lastState,
+            checklist,
+        }));
+    };
+
     const updateTaskForm = (e: React.MouseEvent<unknown>) => {
         e.preventDefault();
+        setAutoFocus(false);
+
         if (
             formTaskState.name &&
             formTaskState.priority &&
@@ -106,6 +140,7 @@ export const ModalComponent = () => {
                             description: formTaskState.description ? formTaskState.description : "",
                             priority: formTaskState.priority,
                             points: formTaskState.points,
+                            checkList: formTaskState.checklist,
                         },
                         origin: creationEditionState.stage,
                         destination: stage,
@@ -117,13 +152,50 @@ export const ModalComponent = () => {
             }
         }
     };
+    const createTaskForm = (e: React.MouseEvent<unknown>) => {
+        e.preventDefault();
+        setAutoFocus(false);
+
+        if (
+            formTaskState.name &&
+            formTaskState.priority &&
+            formTaskState.stage &&
+            formTaskState.points
+        ) {
+            const stage = StagesConfig.find((stage) => {
+                if (stage.name === formTaskState.stage) {
+                    return stage;
+                }
+            });
+            if (stage) {
+                dispatch(
+                    createTask({
+                        createdTask: {
+                            _id: new Date().getMilliseconds(),
+                            name: formTaskState.name,
+                            description: formTaskState.description ? formTaskState.description : "",
+                            priority: formTaskState.priority,
+                            points: formTaskState.points,
+                            checkList: formTaskState.checklist,
+                            tags: [],
+                        },
+                        currentStage: stage,
+                    })
+                );
+                cancelForm();
+            }
+        }
+    };
     const cancelForm = () => {
+        setAutoFocus(false);
+
         setFormTaskState({
             name: "",
             description: "",
             stage: "",
             priority: undefined,
             points: undefined,
+            checklist: [],
         });
         dispatch(cancelCreationEdition());
     };
@@ -163,13 +235,81 @@ export const ModalComponent = () => {
                                 <div id="inputDescription">
                                     <label htmlFor="description"> Description </label>
                                     <textarea
+                                        placeholder="Write description's task..."
                                         name="description"
                                         id="descriptionInput"
                                         value={formTaskState.description}
                                         onChange={handleFormUpdate}
                                     />
                                 </div>
-                                <div id="checklist"></div>
+                                <div id="checklist">
+                                    <div id="titleChecklist">
+                                        <h3>Checklist</h3>
+                                        <button
+                                            onClick={($event) => {
+                                                addCheckbox($event);
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                    <ul>
+                                        {formTaskState.checklist?.map((step, position) => {
+                                            return (
+                                                <span key={position} className="taskCheckbox">
+                                                    <span className="inputCheckbox">
+                                                        <input
+                                                            className="inputValueCheckbox"
+                                                            onChange={($event) =>
+                                                                handleCheckboxFormUpdate(
+                                                                    {
+                                                                        target: {
+                                                                            name: step.name,
+                                                                            value: $event.target
+                                                                                .checked,
+                                                                        },
+                                                                    },
+                                                                    position
+                                                                )
+                                                            }
+                                                            key={step.name + "Checkbox"}
+                                                            type="checkbox"
+                                                            defaultChecked={step.checked}
+                                                        />
+                                                        <input
+                                                            name={step.name}
+                                                            autoFocus={autofocus}
+                                                            className="inputTextCheckbox"
+                                                            onChange={($event) =>
+                                                                handleCheckboxNameFormUpdate(
+                                                                    {
+                                                                        target: {
+                                                                            value: $event.target
+                                                                                .value,
+                                                                        },
+                                                                    },
+                                                                    position
+                                                                )
+                                                            }
+                                                            type="text"
+                                                            placeholder="Write check name..."
+                                                            value={step.name}
+                                                            key={step.name + "Input"}
+                                                        />
+                                                    </span>
+                                                    <span
+                                                        className="deleteCheckbox"
+                                                        onClick={() => {
+                                                            deleteChecklistElement(position);
+                                                        }}
+                                                    >
+                                                        X
+                                                    </span>
+                                                </span>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
                                 <div id="inputSelectors">
                                     <div className="selector">
                                         <label htmlFor="stage">Stage</label>

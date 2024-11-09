@@ -13,8 +13,10 @@ export const TaskComponent = (_props: {
     // const dragState = useAppSelector((state) => state.dragState);
 
     const dispatch = useAppDispatch();
-    const getNumberOfCheckedTasks = (numberOfTasks: number): number => {
-        return numberOfTasks;
+    const getNumberOfCheckedTasks = (tasks: { name: string; checked: boolean }[]): number => {
+        return tasks.filter((task) => {
+            return task.checked;
+        }).length;
     };
 
     const setNewPositionCard = () => {
@@ -61,9 +63,12 @@ export const TaskComponent = (_props: {
             <footer>
                 <div id="checklist">
                     {_props.task.checkList
-                        ? getNumberOfCheckedTasks(_props.task.checkList.length)
-                        : 0}
-                    / {_props.task.checkList ? _props.task.checkList?.length : undefined}
+                        ? (_props.task.checkList
+                              ? getNumberOfCheckedTasks(_props.task.checkList)
+                              : null) +
+                          "/" +
+                          (_props.task.checkList ? _props.task.checkList.length : null)
+                        : null}
                 </div>
                 <div id="users">
                     {_props.task.users ? _props.task.users.map((user) => user) : undefined}
