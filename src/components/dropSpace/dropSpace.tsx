@@ -42,6 +42,7 @@ export const DropSpace = (_props: { position: number; numberOfTasks: number }) =
 
     return (
         <section
+            onDragEnter={() => showSpace(true)}
             onDragLeave={() => {
                 setTimeout(() => {
                     showSpace(false);

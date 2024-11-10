@@ -18,8 +18,11 @@
     justify-content: space-between;
     border: 3px dashed rgba(183, 183, 183, 0.633) !important;
     border-radius: 10px;
-    margin: 50px 0;
+    margin: 25px 0;
 }
 .hide_space {
+    height: 0;
+    padding: 25px 0;
+    margin: 0px;
     transition: ease-out 0.5 linear;
 }
